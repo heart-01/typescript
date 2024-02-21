@@ -23,21 +23,18 @@ class Context {
 class NewState implements State {
   public handle(context: Context): void {
     console.log("User account is in new state, activating now.");
-    context.transitionTo(new ActiveState());
   }
 }
 
 class ActiveState implements State {
   public handle(context: Context): void {
     console.log("User account is active. Suspending account.");
-    context.transitionTo(new SuspendedState());
   }
 }
 
 class SuspendedState implements State {
   public handle(context: Context): void {
     console.log("User account is suspended. Closing account.");
-    context.transitionTo(new ClosedState());
   }
 }
 
@@ -49,6 +46,6 @@ class ClosedState implements State {
 
 // Usage
 const context = new Context(new NewState());
-context.request(); // The account will be activated
-context.request(); // The account will be suspended
-context.request(); // The account will be closed
+context.transitionTo(new ActiveState()); // The account will be activated
+context.transitionTo(new SuspendedState()); // The account will be suspended
+context.transitionTo(new ClosedState()); // The account will be closed
